@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Header from "./Header";
 import Button from "./Button";
@@ -6,29 +7,69 @@ import Deadman from "./DeadMan";
 import DeadLetters from "./DeadLetters";
 import TheWord from "./TheWord";
 import Keyboard from "./Keyboard";
+import words from "../data/words.json";
 import GameOverModal from "./GameOverModal";
-
 import { colors, contentWidth } from "./GlobalStyles";
 
+const initialGameState = { started: false, over: false, win: false };
+
 const App = () => {
+  const [game, setGame] = useState(initialGameState);
+  const [word, setWord] = useState({ str: "" });
+  const [wrongGuesses, setWrongGuesses] = useState([]);
+  const [usedLetters, setUsedLetters] = useState([]);
+
+  const handleStart = () => {
+    setGame({ ...game, started: !game.started });
+
+    if (word.str === "") {
+      getNewWord();
+    }
+  };
+
+  const handleGuess = (ltr) => {
+
+  }
+
+
+  const getNewWord = () => {
+    let newWord = words[Math.floor(Math.random() * words.length)];
+    setWord({ revealed: new Array(newWord.length).fill(""), str: newWord });
+  }
+
+  const btnLabel = () => {
+    let label = '';
+    if (word.str === "") {
+      label = "start";
+    } else if (word.str !== "" && !game.started) {
+      label = "continue";
+    } else if (word.str !== "" && game.started) {
+      label = "pause";
+    }
+    return label;
+  }
+
+
   return (
     <Wrapper>
       {/* <GameOverModal /> */}
       <Header />
       <Nav>
-        <Button>btn 1</Button>
+        <Button onClickFunc={handleStart}>{btnLabel()}</Button>
         <Button>btn 2</Button>
       </Nav>
-      <>
-        <Container>
-          <Deadman />
-          <RightColumn>
-            <DeadLetters />
-            <TheWord />
-          </RightColumn>
-        </Container>
-        <Keyboard />
-      </>
+      {game.started && (
+        <>
+          <Container>
+            <Deadman />
+            <RightColumn>
+              <DeadLetters guess={wrongGuesses} />
+              <TheWord word={word} />
+            </RightColumn>
+          </Container>
+          <Keyboard usedLetters={usedLetters} handler={handleGuess} />
+        </>
+      )}
     </Wrapper>
   );
 };

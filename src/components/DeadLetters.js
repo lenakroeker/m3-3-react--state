@@ -3,11 +3,14 @@ import styled from "styled-components";
 
 import { colors } from "./GlobalStyles";
 
-const DeadLetters = ({}) => {
+const DeadLetters = ({ guess }) => {
+
   return (
     <Wrapper>
       <h2>Dead Letters</h2>
-      <List></List>
+      <List>{guess.map((letter) => {
+        return <Letter>{letter}</Letter>
+      })}</List>
     </Wrapper>
   );
 };
