@@ -1,15 +1,19 @@
 import React from "react";
 import styled from "styled-components";
-
 import { colors } from "./GlobalStyles";
 
-const LetterKey = ({ letters, usedLetters, handler }) => {
+const LetterKey = ({ word, letters, usedLetters, handler, wrongGuesses }) => {
+
+
   return (
     letters.map((letter) => {
       if (usedLetters.includes(letter)) {
-        return <Wrapper disabled>{letter}</Wrapper>;
+        return <Wrapper disabled key={letter + " letterkey"}> {letter}</ Wrapper>;
+      } else {
+        return <Wrapper key={letter + " letterkey"}
+          onClick={() => { handler(letter) }}
+        >{letter}</Wrapper>;
       }
-      return <Wrapper>{letter}</Wrapper>;
     })
   )
     ;
@@ -31,12 +35,12 @@ const Wrapper = styled.button`
   transition: all linear 400ms;
 
   &:hover {
-    background: ${colors.fuchsia};
+            background: ${colors.fuchsia};
   }
 
   &:disabled,
   &:hover:disabled {
-    background: #707070;
+            background: #707070;
     opacity: 0.4;
     cursor: not-allowed;
   }

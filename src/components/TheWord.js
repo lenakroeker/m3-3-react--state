@@ -1,19 +1,19 @@
 import React from "react";
 import styled from "styled-components";
-import App from "./App";
+
 
 
 const TheWord = ({ word }) => {
-  console.log(word.revealed)
+
 
   return (
     <Wrapper>
       {word.revealed.map((space => {
         if (space === "") {
-          return <Span line={true}></Span>
+          return <Span key={word + "space" + Math.floor(Math.random() * 867)} line={true}></Span>
         }
         else {
-          return <Span>{space}</Span>;
+          return <Span key={word + "char" + Math.floor(Math.random() * 187)} >{space}</Span>;
         }
       }))}
     </Wrapper>)

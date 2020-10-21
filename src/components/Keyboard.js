@@ -4,10 +4,13 @@ import LetterKey from "./LetterKey";
 import letters from "../data/letters.json";
 import { colors, contentWidth } from "./GlobalStyles";
 
-const Keyboard = ({ usedLetters, handler }) => (
-  <Wrapper>
-    <LetterKey letters={letters} usedLetters={usedLetters} handler={handler} />
-  </Wrapper>
+
+const Keyboard = ({ usedLetters, handler, word, wrongGuesses }) => (
+  < Wrapper >
+    <LetterKey letters={letters} usedLetters={usedLetters}
+      handler={handler}
+      word={word} wrongGuesses={wrongGuesses} id={Math.floor(Math.random() * 487)} />
+  </Wrapper >
 );
 
 const Wrapper = styled.div`
